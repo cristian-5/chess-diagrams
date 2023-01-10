@@ -236,13 +236,14 @@ std::vector<image<rgb>> diagrams(std::string moves, theme & t, perspective p = W
 	frames.push_back(current); // push starting position
 	current = current.copy();
 	image<rgb> last = current.copy();
-	byte move[4]; char promotion = ' '; byte m = 0;
-	for (size_t i = 0; i < moves.length(); i++) {
+	byte move[4]; char promotion = ' '; byte m = 0; bool ep = false;
+	for (size_t i = 0, turn = 0; i < moves.length(); i++) {
 		switch (moves[i]) {
 			case ';': case ' ': case '\t': case '\n': case '\r':
 				frames.push_back(current);
 				current = last;
 				last = last.copy();
+				turn++;
 				continue;
 			break;
 			// switch is faster than if statements due to jump table
@@ -252,17 +253,16 @@ std::vector<image<rgb>> diagrams(std::string moves, theme & t, perspective p = W
 				move[m++] = moves[i] - 'A'; break;
 			case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8':
 				move[m++] = moves[i] - '0' - 1; break;
+			case '$': ep = true; continue; // en-passant for the next move
+			// en-passant for white, test: e2e4;d7d5;e4e5;f7f5;$e5f6
+			// en-passant for black, test: e2e4;d7d5;e4e5;d5d4;c2c4;$d4c3;b2c3;c7c6
 			/*case 'K': // kingside castle white
-
 			break;
 			case 'k': // kingside castle black
-
 			break;
 			case 'Q': // queenside castle white
-
 			break;
 			case 'q': // queenside castle black
-
 			break;*/
 		}
 		if (m == 4) {
@@ -291,6 +291,16 @@ std::vector<image<rgb>> diagrams(std::string moves, theme & t, perspective p = W
 			current.draw((p ? t.board_w : t.board_b), x, y, x, y, side, side);
 			last.draw((p ? t.board_w : t.board_b), x, y, x, y, side, side);
 			current.draw(t.highlight, x, y, side, side);
+			// if en-passant, vacate the captured pawn
+			if (ep) {
+				const byte py = move[3] + ((turn & 1) ? 1 : - 1);
+				board[py][move[2]] = ' ';
+				x = (p ? move[2] : 7 - move[2]) * side;
+				y = (p ? 7 - py : py) * side;
+				current.draw((p ? t.board_w : t.board_b), x, y, x, y, side, side);
+				last.draw((p ? t.board_w : t.board_b), x, y, x, y, side, side);
+				ep = false;
+			}
 			// draw the piece
 			board[move[3]][move[2]] = piece;
 			draw(current, piece, move[2], move[3] + 1, t, p);

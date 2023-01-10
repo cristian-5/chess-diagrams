@@ -27,6 +27,8 @@ endpoint, followed by the theme name, the perspective and the list of moves.
 Moves for each frame are indicated by the starting square and the ending
 square. When queening they are followed by an equal sign and the resulting
 piece (`e7e8=Q`). When castling specify the rook move first (`a8d8e8c8`).
+When the move is *en-passant*, add a `$` symbol before the start square and
+ending square of the pawn (`exf6 e.p.` becomes `$e5f6`).
 Each frame ends with a semicolon:
 
 ```
