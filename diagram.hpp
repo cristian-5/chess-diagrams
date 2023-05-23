@@ -338,10 +338,10 @@ vector<image<rgb>> diagrams(string moves, theme & t, perspective p = WHITE) {
 				lit.draw((p ? t.board_w : t.board_b), x, y, x, y, side, side);
 				unlit.draw((p ? t.board_w : t.board_b), x, y, x, y, side, side);
 				// draw the rook highlights:
-				// lit.draw(t.highlight, x, y, side, side); // source
-				// x = (p ? F : 7 - F) * side;
-				// y = (p ? 7 - py : py) * side;
-				// lit.draw(t.highlight, x, y, side, side); // destination
+				lit.draw(t.highlight, x, y, side, side); // source
+				x = (p ? F : 7 - F) * side;
+				y = (p ? 7 - py : py) * side;
+				lit.draw(t.highlight, x, y, side, side); // destination
 				// move the rook to the destination square (f1 or f8):
 				char rook = turn == WHITE ? 'R' : 'r';
 				board[py][F] = rook;
@@ -356,10 +356,10 @@ vector<image<rgb>> diagrams(string moves, theme & t, perspective p = WHITE) {
 				lit.draw((p ? t.board_w : t.board_b), x, y, x, y, side, side);
 				unlit.draw((p ? t.board_w : t.board_b), x, y, x, y, side, side);
 				// draw the rook highlights:
-				// lit.draw(t.highlight, x, y, side, side); // source
-				// x = (p ? D : 7 - D) * side;
-				// y = (p ? 7 - py : py) * side;
-				// lit.draw(t.highlight, x, y, side, side); // destination
+				lit.draw(t.highlight, x, y, side, side); // source
+				x = (p ? D : 7 - D) * side;
+				y = (p ? 7 - py : py) * side;
+				lit.draw(t.highlight, x, y, side, side); // destination
 				// move the rook to the destination square (d1 or d8):
 				char rook = turn == WHITE ? 'R' : 'r';
 				board[py][D] = rook;
