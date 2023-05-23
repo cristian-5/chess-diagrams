@@ -1,11 +1,12 @@
 
 # Chess Diagrams
 
-This software is made with ❤️ by [thechessnerd](https://www.instagram.com/thechessnerd/) team.
+This software is made with ❤️ by
+[thechessnerd](https://www.instagram.com/thechessnerd/) team.
 
 Create chess diagrams with the `Alpha Chess` Set and a wooden background
 in a $800\times800$ optimized `.png` file with the chosen perspective.
-Create $400\times400$ `.gif` game previews with move highlights in 5 different themes.
+Create $400\times400$ `.gif` themed game previews with move highlights.
 The valid themes are `bubble`, `iceage`, `nature`, `wooden`, `grapes`.
 The resulting files are optimized for web use.
 
@@ -26,9 +27,10 @@ The animated previews can be achieved by locating the resource at the base
 endpoint, followed by the theme name, the perspective and the list of moves.
 Moves for each frame are indicated by the starting square and the ending
 square. When queening they are followed by an equal sign and the resulting
-piece (`e7e8=Q`). When castling specify the rook move first (`a8d8e8c8`).
-When the move is *en-passant*, add a `$` symbol before the start square and
-ending square of the pawn (`exf6 e.p.` becomes `$e5f6`).
+piece (`e7e8=Q`). When castling specify the king move only, from start to
+end square (`e1g1`). Illegal moves result in undefined behaviour. Caslting
+highlights are displayed for the king alone, but this setting can be changed
+by uncommenting the corresponding sections in the code.
 Each frame ends with a semicolon:
 
 ```

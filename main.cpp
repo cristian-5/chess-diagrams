@@ -111,7 +111,7 @@ int pgn(route66::request & request, std::ostream & headers, std::ostream & conte
 	MsfGifState gifstate;
 	msf_gif_begin(& gifstate, 400, 400);
 	for (auto & board : boards) {
-		byte * raw = board.to<rgba>();
+		uint8_t * raw = board.to<rgba>();
 		msf_gif_frame(& gifstate, raw, 80, 16, board.width() * 4);
 		board.free(); delete[] raw;
 	}
