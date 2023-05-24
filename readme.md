@@ -30,7 +30,8 @@ square. When queening they are followed by an equal sign and the resulting
 piece (`e7e8=Q`). When castling specify the king move only, from start to
 end square (`e1g1`). Illegal moves result in undefined behaviour. Caslting
 highlights are displayed for both the king and the rook, but this setting can
-be changed by commenting the corresponding sections in the code.
+be changed by commenting the corresponding sections in the code. The frame
+delay and freeze (last frame delay) are configurable.
 Each frame ends with a semicolon:
 
 ```

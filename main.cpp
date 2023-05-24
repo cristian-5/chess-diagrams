@@ -7,6 +7,9 @@
 #define MSF_GIF_IMPL
 #include "msf_gif.h"
 
+const size_t  delay =  850; // time between frames in ms
+const size_t freeze = 2000; // time to freeze on last frame in ms
+
 theme full, theme50;
 std::vector<theme> themes;
 lodepng::State state;
@@ -110,11 +113,16 @@ int pgn(route66::request & request, std::ostream & headers, std::ostream & conte
 	std::vector<image<rgb>> boards = diagrams(request.uri.substr(17), themes[T], P);
 	MsfGifState gifstate;
 	msf_gif_begin(& gifstate, 400, 400);
-	for (auto & board : boards) {
-		uint8_t * raw = board.to<rgba>();
-		msf_gif_frame(& gifstate, raw, 80, 16, board.width() * 4);
-		board.free(); delete[] raw;
+	for (size_t i = 0; i < boards.size() - 1; i++) {
+		uint8_t * raw = boards[i].to<rgba>();
+		msf_gif_frame(& gifstate, raw, delay / 10, 16, boards[i].width() * 4);
+		boards[i].free(); delete[] raw;
 	}
+	// longer last frame:
+	size_t i = boards.size() - 1;
+	uint8_t * raw = boards[i].to<rgba>();
+	msf_gif_frame(& gifstate, raw, freeze / 10, 16, boards[i].width() * 4);
+	boards[i].free(); delete[] raw;
 	MsfGifResult result = msf_gif_end(& gifstate);
 	headers << property("Content-Type", "image/gif");
 	contents.write((char *) result.data, result.dataSize);
