@@ -11,17 +11,17 @@ const size_t  delay =  850; // time between frames in ms
 const size_t freeze = 2000; // time to freeze on last frame in ms
 
 theme full, theme50;
-std::vector<theme> themes;
+vector<theme> themes;
 lodepng::State state;
 
 enum themes50: size_t { bubble, wooden, nature, iceage, grapes };
-pixel highlights[] = { 0xffd10066ul, 0x3cd2a066ul, 0xffd10073ul, 0x64ff6380ul, 0x2096f480ul };
-const std::vector<std::string> theme50_names = { "bubble", "wooden", "nature", "iceage", "grapes" };
+pixel highlights[] = { 0xFFD10066, 0xe52b2a90, 0xFFD10073, 0x64FF6380, 0x2096F480 };
+const vector<string> theme50_names = { "bubble", "wooden", "nature", "iceage", "grapes" };
 
 template <perspective P>
-int fen(route66::request & request, std::ostream & headers, std::ostream & contents);
+int fen(route66::request & request, ostream & headers, ostream & contents);
 template <perspective P, size_t T>
-int pgn(route66::request & request, std::ostream & headers, std::ostream & contents);
+int pgn(route66::request & request, ostream & headers, ostream & contents);
 
 int main(int argc, char * argv[]) {
 
@@ -88,7 +88,7 @@ int main(int argc, char * argv[]) {
 	if (!route66::create(8080, "GET /pgn/grapes/white/*", pgn<WHITE, grapes>)) return 1;
 	if (!route66::create(8080, "GET /pgn/grapes/black/*", pgn<BLACK, grapes>)) return 1;
 
-	std::cout << "server ready at localhost:8080" << std::endl;
+	cout << "server ready at localhost:8080" << endl;
 
 	route66::traffic();
 
@@ -99,9 +99,9 @@ int main(int argc, char * argv[]) {
 }
 
 template <perspective P>
-int fen(route66::request & request, std::ostream & headers, std::ostream & contents) {
+int fen(route66::request & request, ostream & headers, ostream & contents) {
 	image<rgb> board = diagram(request.uri.substr(11), full, P);
-	std::vector<unsigned char> png;
+	vector<unsigned char> png;
 	lodepng::encode(png, (unsigned char *) board.raw(), 800, 800, state);
 	headers << property("Content-Type", "image/png");
 	contents.write((char *) png.data(), png.size());
@@ -109,8 +109,8 @@ int fen(route66::request & request, std::ostream & headers, std::ostream & conte
 }
 
 template <perspective P, size_t T>
-int pgn(route66::request & request, std::ostream & headers, std::ostream & contents) {
-	std::vector<image<rgb>> boards = diagrams(request.uri.substr(17), themes[T], P);
+int pgn(route66::request & request, ostream & headers, ostream & contents) {
+	vector<image<rgb>> boards = diagrams(request.uri.substr(17), themes[T], P);
 	MsfGifState gifstate;
 	msf_gif_begin(& gifstate, 400, 400);
 	for (size_t i = 0; i < boards.size() - 1; i++) {
