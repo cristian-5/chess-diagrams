@@ -15,7 +15,7 @@ vector<theme> themes;
 lodepng::State state;
 
 enum themes50: size_t { bubble, wooden, nature, iceage, grapes };
-pixel highlights[] = { 0xFFD10066, 0xe52b2a90, 0xFFD10073, 0x64FF6380, 0x2096F480 };
+pixel highlights[] = { 0xFFD10066, 0xE52B2A90, 0xFFD10073, 0x64FF6380, 0x2096F480 };
 const vector<string> theme50_names = { "bubble", "wooden", "nature", "iceage", "grapes" };
 
 template <perspective P>
