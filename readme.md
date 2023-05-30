@@ -39,6 +39,12 @@ http://localhost:8080/pgn/nature/white/e2e4;e7e5;g1f3
 http://localhost:8080/pgn/nature/black/e2e4;e7e5;g1f3
 ```
 
+### Build
+
+The project uses `clang++` and the **C++20** standard.
+- Windows: `build.bat`
+- Linux / MacOS: `build.sh`
+
 ### Rights
 
 - For the `.png` encoding we depend on the **LOVELY** 🤎
