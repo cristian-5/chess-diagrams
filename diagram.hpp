@@ -217,7 +217,11 @@ image<rgb> diagram(string fen, theme t, perspective p = WHITE) {
 }
 
 bool en_passant(char board[8][8], player turn, uint8_t * move) {
+	// check if it's a pawn
 	if (board[move[1]][move[0]] != 'P' && board[move[1]][move[0]] != 'p')
+		return false;
+	// check if the pawn capture square is empty
+	if (board[move[3]][move[2]] != ' ')
 		return false;
 	// files must be shifted by 1:
 	if (move[0] != move[2] - 1 && move[0] != move[2] + 1) return false;
